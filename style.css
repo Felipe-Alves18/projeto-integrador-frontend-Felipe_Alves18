@@ -1,3 +1,4 @@
-.barato { background-color: #e6f4ea; }
-.medio { background-color: #fff8e1; }
-.caro { background-color: #fdecea; }
+.ok { background-color: #e6f4ea; }
+.baixo { background-color: #fff8e1; }
+.esgotado { background-color: #fdecea; }
+.azul { color: blue; }
