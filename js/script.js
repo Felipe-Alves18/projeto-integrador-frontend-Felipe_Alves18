@@ -4,9 +4,11 @@ const produtos = [
   { nome: "Jaqueta", preco: 349.9, estoque: 3 },
   { nome: "Boné", preco: 49.9, estoque: 15 },
   { nome: "Tênis", preco: 259.9, estoque: 5 },
+  { nome: "Meia", preco: 19.9, estoque: 0 },
 ];
 
 console.log(produtos);
+
 function precoComDesconto(preco, desconto = 10) {
   return preco - (preco * desconto) / 100;
 }
@@ -14,19 +16,28 @@ function precoComDesconto(preco, desconto = 10) {
 console.log(precoComDesconto(100));      // esperado: 90
 console.log(precoComDesconto(100, 25));  // esperado: 75
 console.log(precoComDesconto(189.9));    // esperado: 170.91
-function classificarPreco(preco) {
-  if (preco < 100) {
-    return "barato";
-  } else if (preco < 250) {
-    return "medio";
+
+function valorEmEstoque(preco, quantidade = 1) {
+  return preco * quantidade;
+}
+
+console.log(valorEmEstoque(10, 3));  // esperado: 30
+console.log(valorEmEstoque(10));     // esperado: 10
+
+function classificarEstoque(quantidade) {
+  if (quantidade === 0) {
+    return "esgotado";
+  } else if (quantidade <= 5) {
+    return "baixo";
   } else {
-    return "caro";
+    return "ok";
   }
 }
 
-console.log(classificarPreco(49.9));   // esperado: barato
-console.log(classificarPreco(189.9));  // esperado: medio
-console.log(classificarPreco(349.9));  // esperado: caro
+console.log(classificarEstoque(0));   // esperado: esgotado
+console.log(classificarEstoque(3));   // esperado: baixo
+console.log(classificarEstoque(20));  // esperado: ok
+
 const comDesconto = produtos.map((produto) => {
   return {
     nome: produto.nome,
@@ -35,22 +46,51 @@ const comDesconto = produtos.map((produto) => {
   };
 });
 
-const caros = comDesconto.filter((produto) => {
-  return classificarPreco(produto.preco) === "caro";
+const estoqueBaixo = comDesconto.filter((produto) => {
+  return classificarEstoque(produto.estoque) === "baixo";
 });
 
 const valorTotalEstoque = produtos.reduce((total, produto) => {
-  return total + produto.preco * produto.estoque;
+  return total + valorEmEstoque(produto.preco, produto.estoque);
 }, 0);
 
 console.log(comDesconto);
-console.log(caros);
+console.log(estoqueBaixo);
 console.log(valorTotalEstoque);
-function criarElementoProduto(produto) {
-  const item = document.createElement("article");
-  item.classList.add("produto", classificarPreco(produto.preco));
-  item.textContent = `${produto.nome} - R$ ${produto.preco.toFixed(2)} (estoque: ${produto.estoque})`;
-  return item;
+
+function criarCabecalho() {
+  const cabecalho = document.createElement("thead");
+  const linha = document.createElement("tr");
+
+  ["Produto", "Preço", "Estoque", "Situação"].forEach((titulo) => {
+    const celula = document.createElement("th");
+    celula.textContent = titulo;
+    linha.append(celula);
+  });
+
+  cabecalho.append(linha);
+  return cabecalho;
+}
+
+function criarLinhaProduto(produto) {
+  const situacao = classificarEstoque(produto.estoque);
+  const linha = document.createElement("tr");
+  linha.classList.add(situacao);
+
+  const valores = [
+    produto.nome,
+    `R$ ${produto.preco.toFixed(2)}`,
+    produto.estoque,
+    situacao,
+  ];
+
+  valores.forEach((valor) => {
+    const celula = document.createElement("td");
+    celula.textContent = valor;
+    linha.append(celula);
+  });
+
+  return linha;
 }
 
 const areaResultado = document.querySelector("#resultado");
@@ -58,12 +98,28 @@ const areaResultado = document.querySelector("#resultado");
 if (areaResultado === null) {
   console.error("Seção #resultado não encontrada");
 } else {
-  comDesconto.forEach((produto) => {
-    areaResultado.append(criarElementoProduto(produto));
+  const tabela = document.createElement("table");
+  const corpo = document.createElement("tbody");
+
+  produtos.forEach((produto) => {
+    corpo.append(criarLinhaProduto(produto));
   });
+
+  tabela.append(criarCabecalho(), corpo);
+  areaResultado.append(tabela);
 
   const resumo = document.createElement("p");
   resumo.classList.add("resumo");
-  resumo.textContent = `Valor total em estoque: R$ ${valorTotalEstoque.toFixed(2)}`;
+  resumo.textContent = `Valor total em estoque: R$ ${valorTotalEstoque.toFixed(2)} | Itens com estoque baixo: ${estoqueBaixo.length}`;
   areaResultado.append(resumo);
+}
+const titulo = document.querySelector("h1");
+const botaoTitulo = document.querySelector("#botao-titulo");
+
+if (titulo === null || botaoTitulo === null) {
+  console.error("Título ou botão não encontrado");
+} else {
+  botaoTitulo.addEventListener("click", () => {
+    titulo.classList.add("azul");
+  });
 }
