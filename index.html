@@ -1,15 +1,353 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dimendes</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimendes - Loja Online</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Barra verde escura fixa no topo com DIMENDES */
+        .top-bar {
+            width: 100%;
+            background-color: #1f3d2b !important;
+            color: #ffffff !important;
+            text-align: center !important;
+            padding: 14px 0 !important;
+            font-size: 1.3rem !important;
+            font-weight: bold !important;
+            letter-spacing: 3px !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 9999 !important;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            padding: 0;
+            padding-top: 60px !important;
+        }
+
+        /* Menu de Navegação entre Páginas */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            background-color: #f4f8f5;
+            border-bottom: 2px solid #eaeaea;
+            gap: 10px;
+            padding: 12px 0;
+        }
+
+        .tab-btn {
+            background-color: transparent;
+            border: 2px solid #1f3d2b;
+            color: #1f3d2b;
+            padding: 8px 22px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: #1f3d2b;
+            color: #ffffff;
+        }
+
+        /* Conteúdo Geral */
+        .page-content {
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 30px 40px;
+        }
+
+        /* Cabeçalho centralizado */
+        .site-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 12px;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+        }
+
+        .site-titles h1 {
+            font-size: 1.8rem;
+            color: #1f3d2b;
+        }
+
+        .site-titles p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Controle de Abas */
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active-pane {
+            display: block;
+        }
+
+        /* --- PÁGINA 1: APRESENTAÇÃO --- */
+        .presentation-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .products-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #fafbfc;
+            border: 1px solid #eaeaea;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            background-color: #eaeaea;
+        }
+
+        .product-card h3 {
+            font-size: 1rem;
+            color: #1f3d2b;
+        }
+
+        /* Painel Lateral de Vídeo (Página 1) */
+        .sidebar-content {
+            background: #fafbfc;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #eaeaea;
+            width: 100%;
+        }
+
+        .video-box h2 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #1f3d2b;
+            text-align: center;
+        }
+
+        .video-box video {
+            border-radius: 4px;
+            width: 100% !important;
+            height: auto !important;
+            max-height: 220px !important;
+            object-fit: cover;
+            background: #000;
+        }
+
+        /* --- PÁGINA 2: TABELA DE VALORES (Centralizada) --- */
+        .table-full-width {
+            max-width: 900px; /* Define uma largura ideal centrada */
+            margin: 0 auto;   /* Centraliza o bloco na tela */
+            text-align: center; /* Centraliza o botão interno */
+        }
+
+        /* Estilo da Tabela de Produtos */
+        .tabela-produtos {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border: 1px solid #eaeaea;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .tabela-produtos th, 
+        .tabela-produtos td {
+            border: 1px solid #eaeaea;
+            padding: 14px 18px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .tabela-produtos td:first-child {
+            text-align: left;
+        }
+
+        .tabela-produtos th {
+            background-color: #1f3d2b;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .tabela-produtos tbody tr:nth-child(even) {
+            background-color: #fafbfc;
+        }
+
+        .tabela-produtos tbody tr:hover {
+            background-color: #f0f4f1;
+        }
+
+        .preco-antigo {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .tabela-produtos tr.faixa-essencial td:first-child {
+            border-left: 6px solid #27ae60;
+        }
+
+        .tabela-produtos tr.faixa-intermediario td:first-child {
+            border-left: 6px solid #e0a800;
+        }
+
+        .tabela-produtos tr.faixa-premium td:first-child {
+            border-left: 6px solid #1e3d2b;
+            background: #f4f8f5;
+        }
+
+        .resumo {
+            font-weight: bold;
+            text-align: left;
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #1f3d2b;
+            background: #f4f8f5;
+            padding: 12px 16px;
+            border-radius: 4px;
+            border-left: 4px solid #1f3d2b;
+            border: 1px solid #d5e5da;
+        }
+
+        #btn-alternar {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #1f3d2b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+            margin-top: 20px;
+        }
+
+        #btn-alternar:hover {
+            background-color: #2e5c3f;
+        }
+
+        #btn-alternar:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>Organizador de Estoque</h1>
-  <section id="resultado"></section>
-  <script src="js/script.js" defer></script>
+
+    <!-- BARRA FIXA DO TOPO -->
+    <div class="top-bar">
+        DIMENDES
+    </div>
+
+    <!-- BOTÕES DE SELEÇÃO DE PÁGINA (ABAS) -->
+    <nav class="nav-tabs">
+        <button id="btn-apresentacao" class="tab-btn active" onclick="switchPage('apresentacao', this)">Apresentação do Produto</button>
+        <button id="btn-tabela" class="tab-btn" onclick="switchPage('tabela', this)">Tabela de Valores</button>
+    </nav>
+
+    <div class="page-content">
+        <!-- CABEÇALHO DO SITE -->
+        <header class="site-header">
+            <img src="assets/images/logo.jpg.jpeg" alt="Logo da loja" style="width: 70px; height: 70px; min-width: 70px; min-height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #1f3d2b;">
+            <div class="site-titles">
+                <h1>Painel de Gestão e Loja Online</h1>
+                <p>Dimendes - Coleção Exclusiva</p>
+            </div>
+        </header>
+
+        <!-- ==================== PÁGINA 1: APRESENTAÇÃO ==================== -->
+        <div id="apresentacao" class="tab-pane active-pane">
+            <div class="presentation-grid">
+                <!-- Vitrine de Produtos (Boné, Moletom, Jaqueta) -->
+                <main class="products-showcase">
+                    <div class="product-card">
+                        <img src="assets/images/bone2.jpg" alt="Boné Aba Curva" onerror="this.src='https://via.placeholder.com/300x200?text=Bone+Aba+Curva'">
+                        <h3>Boné Aba Curva</h3>
+                    </div>
+                    <div class="product-card">
+                        <img src="assets/images/images.jpg" alt="Moletom Canguru" onerror="this.src='https://via.placeholder.com/300x200?text=Moletom+Canguru'">
+                        <h3>Moletom Canguru</h3>
+                    </div>
+                    <div class="product-card">
+                        <img src="assets/images/images (1).jpg" alt="Jaqueta Corta-Vento" onerror="this.src='https://via.placeholder.com/300x200?text=Jaqueta+Corta-Vento'">
+                        <h3>Jaqueta Corta-Vento</h3>
+                    </div>
+                </main>
+
+                <!-- Vídeo na Lateral -->
+                <aside class="sidebar-content">
+                    <div class="video-box">
+                        <h2>Vídeo Promocional</h2>
+                        <video controls preload="auto">
+                            <source src="assets/videos/vd_camisas3.mp4" type="video/mp4">
+                            Seu navegador não suporta vídeos.
+                        </video>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <!-- ==================== PÁGINA 2: TABELA DE VALORES ==================== -->
+        <div id="tabela" class="tab-pane">
+            <div class="table-full-width">
+                <main class="main-content">
+                    <section id="resultado">
+                        <!-- A tabela e o botão são inseridos aqui pelo js/script.js -->
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALTERNÂNCIA DE ABAS -->
+    <script>
+        function switchPage(pageId, btnElement) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active-pane'));
+
+            if (btnElement) {
+                btnElement.classList.add('active');
+            }
+            document.getElementById(pageId).classList.add('active-pane');
+        }
+    </script>
+
+    <!-- LÓGICA DA TABELA (Aula 11) -->
+    <script src="js/script.js" defer></script>
+
 </body>
+
 </html>
-<button id="botao-titulo">Aperte aqui
