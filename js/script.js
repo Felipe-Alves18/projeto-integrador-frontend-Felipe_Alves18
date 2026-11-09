@@ -1,125 +1,88 @@
 const produtos = [
-  { nome: "Camiseta Básica", preco: 79.9, estoque: 20 },
-  { nome: "Calça Jeans", preco: 189.9, estoque: 8 },
-  { nome: "Jaqueta", preco: 349.9, estoque: 3 },
-  { nome: "Boné", preco: 49.9, estoque: 15 },
-  { nome: "Tênis", preco: 259.9, estoque: 5 },
-  { nome: "Meia", preco: 19.9, estoque: 0 },
+  { nome: "Camisa Básica Premium", preco: 49.9, categoria: "camisas", desconto: 0.1 },
+  { nome: "Camisa Oversized", preco: 79.9, categoria: "camisas", desconto: 0.15 },
+  { nome: "Moletom Canguru", preco: 129.9, categoria: "moletons", desconto: 0.2 },
+  { nome: "Boné Aba Curva", preco: 39.9, categoria: "acessorios", desconto: 0.05 },
+  { nome: "Jaqueta Corta-Vento", preco: 189.9, categoria: "jaquetas", desconto: 0.1 }
 ];
 
-console.log(produtos);
-
-function precoComDesconto(preco, desconto = 10) {
-  return preco - (preco * desconto) / 100;
+function calcularPrecoPromocional(preco, desconto = 0.1) {
+  return preco * (1 - desconto);
 }
 
-console.log(precoComDesconto(100));      // esperado: 90
-console.log(precoComDesconto(100, 25));  // esperado: 75
-console.log(precoComDesconto(189.9));    // esperado: 170.91
-
-function valorEmEstoque(preco, quantidade = 1) {
-  return preco * quantidade;
+function classificarFaixa(preco) {
+  if (preco < 60) return "essencial";
+  if (preco < 120) return "intermediario";
+  return "premium";
 }
 
-console.log(valorEmEstoque(10, 3));  // esperado: 30
-console.log(valorEmEstoque(10));     // esperado: 10
-
-function classificarEstoque(quantidade) {
-  if (quantidade === 0) {
-    return "esgotado";
-  } else if (quantidade <= 5) {
-    return "baixo";
-  } else {
-    return "ok";
-  }
+function formatarPreco(valor) {
+  return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
-console.log(classificarEstoque(0));   // esperado: esgotado
-console.log(classificarEstoque(3));   // esperado: baixo
-console.log(classificarEstoque(20));  // esperado: ok
-
-const comDesconto = produtos.map((produto) => {
-  return {
-    nome: produto.nome,
-    preco: precoComDesconto(produto.preco),
-    estoque: produto.estoque,
-  };
+const processados = produtos.map(function (p) {
+  const precoPromocional = calcularPrecoPromocional(p.preco, p.desconto);
+  return { ...p, precoPromocional, faixa: classificarFaixa(precoPromocional) };
 });
 
-const estoqueBaixo = comDesconto.filter((produto) => {
-  return classificarEstoque(produto.estoque) === "baixo";
-});
+const essenciais = processados.filter((p) => p.faixa === "essencial");
 
-const valorTotalEstoque = produtos.reduce((total, produto) => {
-  return total + valorEmEstoque(produto.preco, produto.estoque);
-}, 0);
+const total = processados.reduce((soma, p) => soma + p.precoPromocional, 0);
+const media = total / processados.length;
 
-console.log(comDesconto);
-console.log(estoqueBaixo);
-console.log(valorTotalEstoque);
-
-function criarCabecalho() {
-  const cabecalho = document.createElement("thead");
-  const linha = document.createElement("tr");
-
-  ["Produto", "Preço", "Estoque", "Situação"].forEach((titulo) => {
-    const celula = document.createElement("th");
-    celula.textContent = titulo;
-    linha.append(celula);
-  });
-
-  cabecalho.append(linha);
-  return cabecalho;
+function criarCelula(tag, texto) {
+  const celula = document.createElement(tag);
+  celula.textContent = texto;
+  return celula;
 }
 
-function criarLinhaProduto(produto) {
-  const situacao = classificarEstoque(produto.estoque);
-  const linha = document.createElement("tr");
-  linha.classList.add(situacao);
-
-  const valores = [
-    produto.nome,
-    `R$ ${produto.preco.toFixed(2)}`,
-    produto.estoque,
-    situacao,
-  ];
-
-  valores.forEach((valor) => {
-    const celula = document.createElement("td");
-    celula.textContent = valor;
-    linha.append(celula);
-  });
-
-  return linha;
+function criarLinha(item) {
+  const tr = document.createElement("tr");
+  tr.classList.add(`faixa-${item.faixa}`);
+  tr.append(criarCelula("td", item.nome), criarCelula("td", formatarPreco(item.preco)));
+  return tr;
 }
 
-const areaResultado = document.querySelector("#resultado");
+const resultado = document.querySelector("#resultado");
 
-if (areaResultado === null) {
-  console.error("Seção #resultado não encontrada");
-} else {
+if (resultado) {
+  const cabecalho = document.createElement("tr");
+  cabecalho.append(criarCelula("th", "Produto"), criarCelula("th", "Preço Original"));
+
+  const thead = document.createElement("thead");
+  thead.append(cabecalho);
+
+  const linhas = processados.map(criarLinha);
+  const tbody = document.createElement("tbody");
+  tbody.append(...linhas);
+
   const tabela = document.createElement("table");
-  const corpo = document.createElement("tbody");
+  tabela.classList.add("tabela-produtos");
+  tabela.append(thead, tbody);
 
-  produtos.forEach((produto) => {
-    corpo.append(criarLinhaProduto(produto));
-  });
-
-  tabela.append(criarCabecalho(), corpo);
-  areaResultado.append(tabela);
+  const botao = document.createElement("button");
+  botao.id = "btn-alternar";
+  botao.textContent = "Aplicar Descontos";
 
   const resumo = document.createElement("p");
   resumo.classList.add("resumo");
-  resumo.textContent = `Valor total em estoque: R$ ${valorTotalEstoque.toFixed(2)} | Itens com estoque baixo: ${estoqueBaixo.length}`;
-  areaResultado.append(resumo);
-}
-const titulo = document.querySelector("h1");
-const botaoTitulo = document.querySelector("#botao-titulo");
+  resumo.textContent = `${processados.length} produtos | preço médio com desconto: ${formatarPreco(media)} | faixa essencial: ${essenciais.length}`;
 
-if (titulo === null || botaoTitulo === null) {
-  console.error("Título ou botão não encontrado");
-} else {
-  botaoTitulo.addEventListener("click", () => {
-    titulo.classList.add("azul");
+  botao.addEventListener("click", function () {
+    cabecalho.append(criarCelula("th", "Preço Promocional"));
+
+    linhas.forEach(function (tr, i) {
+      tr.children[1].classList.add("preco-antigo");
+      const forte = document.createElement("strong");
+      forte.textContent = formatarPreco(processados[i].precoPromocional);
+      const td = document.createElement("td");
+      td.append(forte);
+      tr.append(td);
+    });
+
+    botao.disabled = true;
+    botao.textContent = "Descontos aplicados";
   });
+
+  resultado.append(tabela, botao, resumo);
 }
