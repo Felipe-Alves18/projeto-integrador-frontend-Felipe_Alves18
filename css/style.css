@@ -111,3 +111,194 @@ ul {
     padding-left: 20px;
     text-align: left;
 }
+/* Estilos da Secção Faça Seu Pedido */
+.faca-pedido {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 40px 20px;
+    margin-top: 50px;
+    border-top: 2px solid #333;
+}
+
+.container-pedido {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.container-pedido h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+.container-pedido p {
+    color: #bbb;
+    margin-bottom: 25px;
+}
+
+.form-pedido {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+}
+
+.form-pedido .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-pedido label {
+    font-size: 0.9rem;
+    color: #ddd;
+}
+
+.form-pedido input,
+.form-pedido select,
+.form-pedido textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #2a2a2a;
+    color: #fff;
+    font-family: inherit;
+}
+
+.form-pedido input:focus,
+.form-pedido select:focus,
+.form-pedido textarea:focus {
+    outline: none;
+    border-color: #28a745;
+}
+
+.btn-confirmar-pedido {
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.btn-confirmar-pedido:hover {
+    background-color: #218838;
+}
+
+/* 1. Reset Global & Variáveis de Suporte */
+:root {
+    --cor-fundo-escuro: #1e1e1e;
+    --cor-fundo-campo: #2a2a2a;
+    --cor-borda-padrao: #444444;
+    --cor-destaque-verde: #1e5631;
+    --cor-destaque-hover: #28a745;
+    --cor-texto-principal: #ffffff;
+    --cor-texto-secundario: #bbbbbb;
+    --transicao-padrao: all 0.3s ease;
+}
+
+/* 2. Melhorias de Acessibilidade e Foco */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--cor-destaque-hover);
+    outline-offset: 2px;
+}
+
+/* 3. Estilização Personalizada da Barra de Rolagem (Scrollbar) */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333333;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cor-destaque-verde);
+}
+
+/* 4. Estilos de Formulário & Interatividade */
+.form-pedido input::placeholder,
+.form-pedido textarea::placeholder {
+    color: #777777;
+    font-style: italic;
+}
+
+.form-pedido select option {
+    background-color: var(--cor-fundo-escuro);
+    color: var(--cor-texto-principal);
+    padding: 10px;
+}
+
+.btn-confirmar-pedido {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-confirmar-pedido:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 5. Estilização do Link de Rede Social (Instagram) */
+.link-Instagram {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid var(--cor-destaque-verde);
+    border-radius: 20px;
+    transition: var(--transicao-padrao);
+}
+
+.link-Instagram:hover {
+    background-color: var(--cor-destaque-verde);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(30, 86, 49, 0.4);
+}
+
+/* 6. Animações Suaves de Entrada */
+@keyframes fadeInSuave {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.faca-pedido {
+    animation: fadeInSuave 0.6s ease-in-out;
+}
+
+/* 7. Ajustes de Responsividade (Media Queries) */
+@media screen and (max-width: 768px) {
+    .container-pedido {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .form-pedido {
+        gap: 10px;
+    }
+
+    .btn-confirmar-pedido {
+        width: 100%;
+        padding: 14px;
+    }
+}

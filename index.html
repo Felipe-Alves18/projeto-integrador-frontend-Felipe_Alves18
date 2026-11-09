@@ -1,211 +1,413 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Produtos</title>
-    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
+   
+    <title>Dimendes - Loja Online</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Barra verde escura fixa no topo com DIMENDES */
+        .top-bar {
+            width: 100%;
+            background-color: #1f3d2b !important;
+            color: #ffffff !important;
+            text-align: center !important;
+            padding: 14px 0 !important;
+            font-size: 1.3rem !important;
+            font-weight: bold !important;
+            letter-spacing: 3px !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 9999 !important;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            padding: 0;
+            padding-top: 60px !important;
+        }
+
+        /* Menu de Navegação entre Páginas */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            background-color: #f4f8f5;
+            border-bottom: 2px solid #eaeaea;
+            gap: 10px;
+            padding: 12px 0;
+        }
+
+        .tab-btn {
+            background-color: transparent;
+            border: 2px solid #1f3d2b;
+            color: #1f3d2b;
+            padding: 8px 22px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: #1f3d2b;
+            color: #ffffff;
+        }
+
+        /* Conteúdo Geral */
+        .page-content {
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 30px 40px;
+        }
+
+        /* Cabeçalho centralizado */
+        .site-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 12px;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+        }
+
+        .site-titles h1 {
+            font-size: 1.8rem;
+            color: #1f3d2b;
+        }
+
+        .site-titles p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Controle de Abas */
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active-pane {
+            display: block;
+        }
+
+        /* --- PÁGINA 1: APRESENTAÇÃO --- */
+        .presentation-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .products-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #fafbfc;
+            border: 1px solid #eaeaea;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            background-color: #eaeaea;
+        }
+
+        .product-card h3 {
+            font-size: 1rem;
+            color: #1f3d2b;
+        }
+
+        /* Painel Lateral de Vídeo (Página 1) */
+        .sidebar-content {
+            background: #fafbfc;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #eaeaea;
+            width: 100%;
+        }
+
+        .video-box h2 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #1f3d2b;
+            text-align: center;
+        }
+
+        .video-box video {
+            border-radius: 4px;
+            width: 100% !important;
+            height: auto !important;
+            max-height: 220px !important;
+            object-fit: cover;
+            background: #000;
+        }
+
+        /* --- PÁGINA 2: TABELA DE VALORES (Centralizada) --- */
+        .table-full-width {
+            max-width: 900px; /* Define uma largura ideal centrada */
+            margin: 0 auto;   /* Centraliza o bloco na tela */
+            text-align: center; /* Centraliza o botão interno */
+        }
+
+        /* Estilo da Tabela de Produtos */
+        .tabela-produtos {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border: 1px solid #eaeaea;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .tabela-produtos th, 
+        .tabela-produtos td {
+            border: 1px solid #eaeaea;
+            padding: 14px 18px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .tabela-produtos td:first-child {
+            text-align: left;
+        }
+
+        .tabela-produtos th {
+            background-color: #1f3d2b;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .tabela-produtos tbody tr:nth-child(even) {
+            background-color: #fafbfc;
+        }
+
+        .tabela-produtos tbody tr:hover {
+            background-color: #f0f4f1;
+        }
+
+        .preco-antigo {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .tabela-produtos tr.faixa-essencial td:first-child {
+            border-left: 6px solid #27ae60;
+        }
+
+        .tabela-produtos tr.faixa-intermediario td:first-child {
+            border-left: 6px solid #e0a800;
+        }
+
+        .tabela-produtos tr.faixa-premium td:first-child {
+            border-left: 6px solid #1e3d2b;
+            background: #f4f8f5;
+        }
+
+        .resumo {
+            font-weight: bold;
+            text-align: left;
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #1f3d2b;
+            background: #f4f8f5;
+            padding: 12px 16px;
+            border-radius: 4px;
+            border-left: 4px solid #1f3d2b;
+            border: 1px solid #d5e5da;
+        }
+
+        #btn-alternar {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #1f3d2b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+            margin-top: 20px;
+        }
+
+        #btn-alternar:hover {
+            background-color: #2e5c3f;
+        }
+
+        #btn-alternar:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+        
+    </style>
 </head>
+
 <body>
 
-    <div class="catalogo">
+    <!-- BARRA FIXA DO TOPO -->
+    <div class="top-bar">
+        DIMENDES
+    </div>
 
-        <header>
-            <img src="assets/images/logo.jpg.jpeg" alt="Logo da loja" width="100">
+    <!-- BOTÕES DE SELEÇÃO DE PÁGINA (ABAS) -->
+    <nav class="nav-tabs">
+        <button id="btn-apresentacao" class="tab-btn active" onclick="switchPage('apresentacao', this)">Apresentação do Produto</button>
+        <button id="btn-tabela" class="tab-btn" onclick="switchPage('tabela', this)">Tabela de Valores</button>
+    </nav>
 
-            <h1 id="titulo-principal">Catálogo de Produtos - Loja Online</h1>
-
-            <div class="produto-header">
-                <svg viewBox="0 0 130 46" width="120" height="42" role="img" aria-labelledby="tituloSeloPromo">
-                    <title id="tituloSeloPromo">Selo: Em Promoção</title>
-                    <rect x="2" y="2" width="126" height="42" rx="8" fill="#1F3D2B" stroke="#C9A24B" stroke-width="1.5" />
-                    <text x="65" y="28" font-size="14" font-family="Georgia, serif" letter-spacing="1"
-                          fill="#C9A24B" text-anchor="middle" font-weight="bold">PROMOÇÃO</text>
-                </svg>
+    <div class="page-content">
+        <!-- CABEÇALHO DO SITE -->
+        <header class="site-header">
+            <img src="assets/images/logo.jpg.jpeg" alt="Logo da loja" style="width: 70px; height: 70px; min-width: 70px; min-height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #1f3d2b;">
+            <div class="site-titles">
+                <h1>Painel de Gestão e Loja Online</h1>
+                <p>Dimendes - Coleção Exclusiva</p>
+<!-- Redes Sociais / Instagram -->
+    <div class="redes-sociais" style="text-align: center; margin-top: 20px;">
+        <a class="link-Instagram" href="https://www.instagram.com/dimendesoficial/" target="_blank" style="color: #2e8b57; text-decoration: none; font-weight: bold; font-size: 1.1rem;">@dimendesoficial</a>
+    </div>
             </div>
         </header>
 
-        <main>
+        <!-- ==================== PÁGINA 1: APRESENTAÇÃO ==================== -->
+        <div id="apresentacao" class="tab-pane active-pane">
+            <div class="presentation-grid">
+                <!-- Vitrine de Produtos (Boné, Moletom, Jaqueta) -->
+                <main class="products-showcase">
+                    <div class="product-card">
+                        <img src="assets/images/bone2.jpg" alt="Boné Aba Curva" onerror="this.src='https://via.placeholder.com/300x200?text=Bone+Aba+Curva'">
+                        <h3>Boné Aba Curva</h3>
+                    </div>
+                    <div class="product-card">
+                        <img src="assets/images/images.jpg" alt="Moletom Canguru" onerror="this.src='https://via.placeholder.com/300x200?text=Moletom+Canguru'">
+                        <h3>Moletom Canguru</h3>
+                    </div>
+                    <div class="product-card">
+                        <img src="assets/images/images (1).jpg" alt="Jaqueta Corta-Vento" onerror="this.src='https://via.placeholder.com/300x200?text=Jaqueta+Corta-Vento'">
+                        <h3>Jaqueta Corta-Vento</h3>
+                    </div>
+                </main>
 
-            <section class="card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card produto-box">
-                <h2>Produto em Destaque</h2>
-                <ul>
-    <li>Tamanhos: P, M, G e GG</li>
-    <li>Preços de R$ 44,90 a R$ 54,90</li>
-    <li>Camisa Básica Premium</li>
-</ul>
+                <!-- Vídeo na Lateral -->
+                <aside class="sidebar-content">
+                    <div class="video-box">
+                        <h2>Vídeo Promocional</h2>
+                        <video controls preload="auto">
+                            <source src="assets/videos/vd_camisas3.mp4" type="video/mp4">
+                            Seu navegador não suporta vídeos.
+                        </video>
+                    </div>
+                </aside>
+            </div>
+        </div>
 
-<p><a href="https://pt.wikipedia.org/wiki/Camiseta" target="_blank" rel="noopener noreferrer">Saiba mais sobre camisetas</a></p>
-
-                <table>
-                    <tr>
-                        <th>Produto</th>
-                        <th>Preço</th>
-                    </tr>
-                    <tr>
-                        <td>Camisa Básica Premium</td>
-                        <td class="destaque">R$ 49,90</td>
-                    </tr>
-                </table>
-            </section>
-
-            <section class="card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card video-box">
-                <h2>Apresentação do Produto</h2>
-                <!-- preload="metadata": carrega só a duração; o vídeo é curto e fica abaixo da dobra -->
-                <video width="320" height="240" controls preload="metadata"
-                       poster="assets/images/poster-camisas.png">
-                    <!-- MP4 primeiro (mais compatível); WebM como plano B -->
-                    <source src="assets/videos/vd_camisas3.mp4" type="video/mp4">
-                    <source src="assets/videos/vd_camisas3.webm" type="video/webm">
-                    Seu navegador não suporta a tag de vídeo ou o arquivo não foi encontrado.
-                </video>
-            </section>
-
-            <section class="card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card grafico-box">
-                <h2>Preço por Variação</h2>
-                <canvas id="grafico-precos" width="320" height="200"
-                    role="img" aria-label="Gráfico de preço por variação: P R$ 44,90, M R$ 49,90, G R$ 49,90, GG R$ 54,90">
-                    <p>Preços por variação: P R$ 44,90, M R$ 49,90, G R$ 49,90, GG R$ 54,90.</p>
-                </canvas>
-            </section>
-
-            <section class="card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card card avaliacao-box">
-                <h2>Avalie o Produto</h2>
-
-                <form id="form-avaliacao">
-
-                    <fieldset>
-                        <legend>Seus dados</legend>
-
-                        <!-- o for do label é igual ao id do input -->
-                        <p>
-                            <label for="nome">Nome:</label>
-                            <input type="text" id="nome" name="nome" required>
-                        </p>
-
-                        <p>
-                            <label for="email">E-mail:</label>
-                            <input type="email" id="email" name="email" required>
-                        </p>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>Sua avaliação</legend>
-
-                        <p>
-                            <label for="nota">Nota (1 a 5):</label>
-                            <input type="number" id="nota" name="nota" min="1" max="5" required>
-                        </p>
-
-                        <p>
-                            <label for="tamanho">Tamanho comprado:</label>
-                            <select id="tamanho" name="tamanho" required>
-                                <option value="" disabled selected>Selecione...</option>
-                                <option value="P">P</option>
-                                <option value="M">M</option>
-                                <option value="G">G</option>
-                                <option value="GG">GG</option>
-                            </select>
-                        </p>
-
-                        <!-- mesmo name = só uma opção marcada -->
-                        <fieldset>
-                            <legend>Você recomendaria?</legend>
-                            <input type="radio" id="recomenda-sim" name="recomenda" value="sim" required>
-                            <label for="recomenda-sim">Sim</label>
-                            <input type="radio" id="recomenda-nao" name="recomenda" value="nao">
-                            <label for="recomenda-nao">Não</label>
-                        </fieldset>
-                    </fieldset>
-
-                    <button type="submit" class="botao">Enviar avaliação</button>
-                </form>
-            </section>
-
-        </main>
-
-        <footer>
-            <p><small>&copy; 2026 Dimendes - Catálogo de Produtos</small></p>
-        </footer>
-
+        <!-- ==================== PÁGINA 2: TABELA DE VALORES ==================== -->
+        <div id="tabela" class="tab-pane">
+            <div class="table-full-width">
+                <main class="main-content">
+                    <section id="resultado">
+                        <!-- A tabela e o botão são inseridos aqui pelo js/script.js -->
+                    </section>
+                </main>
+            </div>
+        </div>
     </div>
 
+    <!-- ALTERNÂNCIA DE ABAS -->
     <script>
-    // Gráfico de barras em Canvas (Aula 5)
-    const canvasPrecos = document.getElementById('grafico-precos');
-    const ctxPrecos = canvasPrecos.getContext('2d');
+        function switchPage(pageId, btnElement) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active-pane'));
 
-    const variacoes = ['P', 'M', 'G', 'GG'];
-    const precos = [44.90, 49.90, 49.90, 54.90];
-
-    const areaAltura = 120;
-    const baseY = 150;
-    const precoMax = Math.max(...precos);
-    const alturasFinais = precos.map(p => (p / precoMax) * areaAltura);
-
-    let progresso = 0; // 0 a 1: controla a animação
-
-    function desenharGraficoPrecos() {
-        // clearRect limpa o quadro anterior (evita o rastro do Erro 2)
-        ctxPrecos.clearRect(0, 0, canvasPrecos.width, canvasPrecos.height);
-
-        ctxPrecos.fillStyle = '#FFFFFF';
-        ctxPrecos.fillRect(0, 0, canvasPrecos.width, canvasPrecos.height);
-
-        const larguraBarra = 42;
-        const espaco = 28;
-        let x = 42;
-
-        variacoes.forEach((label, i) => {
-            const alturaAtual = alturasFinais[i] * progresso;
-            const topoY = baseY - alturaAtual;
-
-            ctxPrecos.save();
-            ctxPrecos.shadowColor = 'rgba(31, 61, 43, 0.25)';
-            ctxPrecos.shadowBlur = 8;
-            ctxPrecos.shadowOffsetY = 4;
-
-            ctxPrecos.fillStyle = '#1F3D2B';
-            ctxPrecos.beginPath();
-            ctxPrecos.moveTo(x, baseY);
-            ctxPrecos.lineTo(x, topoY + 8);
-            ctxPrecos.quadraticCurveTo(x, topoY, x + 8, topoY);
-            ctxPrecos.lineTo(x + larguraBarra - 8, topoY);
-            ctxPrecos.quadraticCurveTo(x + larguraBarra, topoY, x + larguraBarra, topoY + 8);
-            ctxPrecos.lineTo(x + larguraBarra, baseY);
-            ctxPrecos.closePath();
-            ctxPrecos.fill();
-            ctxPrecos.restore();
-
-            ctxPrecos.fillStyle = '#C9A24B';
-            ctxPrecos.fillRect(x, topoY, larguraBarra, 4);
-
-            ctxPrecos.fillStyle = '#333333';
-            ctxPrecos.font = '600 13px Arial';
-            ctxPrecos.textAlign = 'center';
-            ctxPrecos.fillText(label, x + larguraBarra / 2, baseY + 20);
-
-            if (progresso >= 1) {
-                ctxPrecos.fillStyle = '#1F3D2B';
-                ctxPrecos.font = 'bold 12px Arial';
-                ctxPrecos.fillText('R$ ' + precos[i].toFixed(2), x + larguraBarra / 2, topoY - 10);
+            if (btnElement) {
+                btnElement.classList.add('active');
             }
-
-            x += larguraBarra + espaco;
-        });
-    }
-    
-    function animarGraficoPrecos() {
-        progresso += 0.03;
-        if (progresso > 1) progresso = 1;
-        desenharGraficoPrecos();
-        if (progresso < 1) {
-            requestAnimationFrame(animarGraficoPrecos);
+            document.getElementById(pageId).classList.add('active-pane');
         }
-    }
-
-    animarGraficoPrecos();
     </script>
+
+    <!-- LÓGICA DA TABELA (Aula 11) -->
+    <script src="js/script.js" defer></script>
+<!-- Secção Faça seu pedido aqui / Rodapé -->
+    <footer class="faca-pedido">
+        <div class="container-pedido">
+            <h2>Faça seu pedido aqui</h2>
+            <p>Selecione o produto, o tamanho desejado e confirme os seus dados para realizar o pedido.</p>
+            
+            <form class="form-pedido" onsubmit="event.preventDefault(); alert('Pedido enviado com sucesso!');">
+                <div class="campo">
+                    <label for="cliente-nome">Nome Completo:</label>
+                    <input type="text" id="cliente-nome" placeholder="Digite o seu nome" required>
+                </div>
+                
+                <div class="campo">
+                    <label for="cliente-email">E-mail para Contacto:</label>
+                    <input type="email" id="cliente-email" placeholder="seuemail@exemplo.com" required>
+                </div>
+
+                <div class="campo">
+                    <label for="produto-selecao">Selecione o Produto:</label>
+                    <select id="produto-selecao" required>
+                        <option value="" disabled selected>Escolha um produto...</option>
+                        <option value="bone">Boné Aba Curva</option>
+                        <option value="moletom">Moletom Canguru</option>
+                        <option value="jaqueta">Jaqueta Corta-Vento</option>
+                        <option value="camisa-basica">Camisa Básica Premium</option>
+                        <option value="camisa-oversized">Camisa Oversized</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="tamanho-selecao">Selecione o Tamanho:</label>
+                    <select id="tamanho-selecao" required>
+                        <option value="" disabled selected>Escolha o tamanho...</option>
+                        <option value="P">P (Pequeno)</option>
+                        <option value="M">M (Médio)</option>
+                        <option value="G">G (Grande)</option>
+                        <option value="GG">GG (Extra Grande)</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="observacoes">Outras Observações (Opcional):</label>
+                    <textarea id="observacoes" rows="2" placeholder="Ex: Cor preferida, detalhes..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-confirmar-pedido">Enviar Pedido</button>
+            </form>
+
+            <!-- Redes Sociais / Instagram -->
+            <div class="redes-sociais" style="text-align: center; margin-top: 25px;">
+                <a class="link-Instagram" href="https://www.instagram.com/dimendesoficial/" target="_blank" style="color: #1e5631; text-decoration: none; font-weight: bold; font-size: 1.1rem;">@dimendesoficial</a>
+            </div>
+        </div>
+    </footer>
 </body>
+
 </html>
