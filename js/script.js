@@ -46,13 +46,30 @@ function criarLinha(item) {
 const resultado = document.querySelector("#resultado");
 
 if (resultado) {
+  let comDesconto = false;
+
+  const thPromo = criarCelula("th", "Preço Promocional");
+  thPromo.hidden = true;
+
   const cabecalho = document.createElement("tr");
-  cabecalho.append(criarCelula("th", "Produto"), criarCelula("th", "Preço Original"));
+  cabecalho.append(criarCelula("th", "Produto"), criarCelula("th", "Preço Original"), thPromo);
 
   const thead = document.createElement("thead");
   thead.append(cabecalho);
 
   const linhas = processados.map(criarLinha);
+
+  const celulasPromo = processados.map(function (item) {
+    const forte = document.createElement("strong");
+    forte.textContent = formatarPreco(item.precoPromocional);
+    const td = document.createElement("td");
+    td.append(forte);
+    td.hidden = true;
+    return td;
+  });
+
+  linhas.forEach((tr, i) => tr.append(celulasPromo[i]));
+
   const tbody = document.createElement("tbody");
   tbody.append(...linhas);
 
@@ -64,25 +81,21 @@ if (resultado) {
   botao.id = "btn-alternar";
   botao.textContent = "Aplicar Descontos";
 
+  botao.addEventListener("click", function () {
+    comDesconto = !comDesconto;
+    thPromo.hidden = !comDesconto;
+
+    celulasPromo.forEach(function (td, i) {
+      td.hidden = !comDesconto;
+      linhas[i].children[1].classList.toggle("preco-antigo", comDesconto);
+    });
+
+    botao.textContent = comDesconto ? "Remover Descontos" : "Aplicar Descontos";
+  });
+
   const resumo = document.createElement("p");
   resumo.classList.add("resumo");
   resumo.textContent = `${processados.length} produtos | preço médio com desconto: ${formatarPreco(media)} | faixa essencial: ${essenciais.length}`;
-
-  botao.addEventListener("click", function () {
-    cabecalho.append(criarCelula("th", "Preço Promocional"));
-
-    linhas.forEach(function (tr, i) {
-      tr.children[1].classList.add("preco-antigo");
-      const forte = document.createElement("strong");
-      forte.textContent = formatarPreco(processados[i].precoPromocional);
-      const td = document.createElement("td");
-      td.append(forte);
-      tr.append(td);
-    });
-
-    botao.disabled = true;
-    botao.textContent = "Descontos aplicados";
-  });
 
   resultado.append(tabela, botao, resumo);
 }

@@ -302,3 +302,18 @@ textarea:focus-visible {
         padding: 14px;
     }
 }
+.link-Instagram:link,
+.link-Instagram:visited {
+    color: #6fcf97;
+    border-color: #6fcf97;
+    text-decoration: none;
+}
+
+.rodape {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    border-top: 1px solid #333;
+    color: #bbbbbb;
+    font-size: 0.9rem;
+}
