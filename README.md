@@ -12,14 +12,25 @@ também é um bônus o cuidado em já mexer com os vídeos usando o css, para se
 
  em relação a criticas positivas, existem algumas coisas que estão faltando da lista de requerimentos em relação a aula 3,a falta do formulário. o header e a main por exemplo ,mas com a base solida vai ser uma questão simples, apesar de demorada de se implementar
 =======
-# Organizador de Estoque
+------------------------------------------------------11/11/2026-----------------------------------------------------------------------
+ DIMENDES - Painel de Gestão e Loja Online
+> Projeto desenvolvido para a disciplina de **Desenvolvimento de Front-end para a Web** (Projeto Integrador).
 
-Desenvolvimento Front-end para Web.
+ Sobre o Projeto
 
-Página em JavaScript puro que mostra uma lista de produtos em tabela, classificando cada um pelo estoque (esgotado, baixo ou ok), com um resumo do valor total em estoque e da quantidade de itens com estoque baixo.
+O **DIMENDES** é uma aplicação web desenvolvida para simular a interface de uma loja online e painel de gestão de catálogo de produtos. A plataforma permite a visualização interativa de itens em estoque, acompanhamento de valores e integração de formulários de pedidos, focando em uma experiência responsiva e limpa para o utilizador.
 
-## Arquivos
-- `index.html`: estrutura da página
-- `style.css`: estilo da tabela e das faixas de cor
-- `js/script.js`: funções, `map`/`filter`/`reduce` e montagem da tabela no DOM
->>>>>>> 98266ef9bf2cb5e46e786fa9b628ad5c55fe6f7b
+ Funcionalidades
+
+- **Catálogo de Produtos:** Exposição visual de itens (Boné Aba Curva, Moletom Canguru, Jaqueta Corta-Vento, entre outros).
+- **Mídia Promocional:** Player de vídeo integrado diretamente na interface do produto.
+- **Tabela Dinâmica de Estoque e Valores:** Exibição automatizada de preços, quantidades e status de produtos.
+- **Formulário de Pedidos:** Interface simples e funcional para simulação de novos pedidos de clientes.
+- **Design Responsivo:** Layout adaptável para desktop e dispositivos móveis.
+
+Tecnologias Utilizadas
+
+- **HTML5:** Estruturação semântica de todo o conteúdo e tabelas.
+- **CSS3:** Estilização personalizada, layout responsivo e transições visuais.
+- **JavaScript (ES6+):** Manipulação dinâmica do DOM, métodos de array (`map`, `filter`, `reduce`) e regras de negócio do estoque.
+- **Git & GitHub:** Versionamento do código e deploy do repositório.
