@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Catálogo de Produtos - Loja Online
 Catálogo de produtos fictício, feito como Projeto Integrador da disciplina
 de Desenvolvimento Front-end. Apresenta uma vitrine online com produtos
