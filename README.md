@@ -11,7 +11,12 @@ a base do código é bastante solida, o código do html ta bom, o css está impl
 também é um bônus o cuidado em já mexer com os vídeos usando o css, para ser mais eficiente e ser excelente tanto para pc quanto para mobile
 
  em relação a criticas positivas, existem algumas coisas que estão faltando da lista de requerimentos em relação a aula 3,a falta do formulário. o header e a main por exemplo ,mas com a base solida vai ser uma questão simples, apesar de demorada de se implementar
-=======
+=========================================
+DIMENDES: Relatório de avaliação
+
+Colega conseguiu entregar todas as aulas e etapas de forma organizada, enviando todas as branchs necessárias e commits bem descritivos. As pastas são bem divididas e o projeto bem estruturado. Não vi a falta de nenhuma função ou requerimento pedido nas aulas.
+Acho que poderia ter utilizado mais do CSS, além de poder adicionar mais produtos a loja e diversificar um pouco visualmente.
+Samuel Maciel Bandeira, 18/11/2026
 ------------------------------------------------------11/11/2026-----------------------------------------------------------------------
  DIMENDES - Painel de Gestão e Loja Online
 > Projeto desenvolvido para a disciplina de **Desenvolvimento de Front-end para a Web** (Projeto Integrador).
