@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Favicon (usa a logo que já existe no projeto) -->
+    <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg.jpeg">
+
     <link rel="stylesheet" href="css/style.css">
-   
 
     <title>Dimendes - Loja Online</title>
-    
+
     <style>
         * {
             margin: 0;
@@ -170,9 +172,9 @@
 
         /* --- PÁGINA 2: TABELA DE VALORES (Centralizada) --- */
         .table-full-width {
-            max-width: 900px; /* Define uma largura ideal centrada */
-            margin: 0 auto;   /* Centraliza o bloco na tela */
-            text-align: center; /* Centraliza o botão interno */
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         /* Estilo da Tabela de Produtos */
@@ -185,7 +187,7 @@
             overflow: hidden;
         }
 
-        .tabela-produtos th, 
+        .tabela-produtos th,
         .tabela-produtos td {
             border: 1px solid #eaeaea;
             padding: 14px 18px;
@@ -266,7 +268,7 @@
             opacity: 0.6;
             cursor: default;
         }
-    
+
     </style>
 </head>
 
@@ -291,10 +293,10 @@
                 <h1>Painel de Gestão e Loja Online</h1>
                 <p>Dimendes - Coleção Exclusiva</p>
 
-<!-- Redes Sociais / Instagram -->
-    <div class="redes-sociais" style="text-align: center; margin-top: 20px;">
-        <a class="link-Instagram" href="https://www.instagram.com/dimendesoficial/" target="_blank" style="color: #2e8b57; text-decoration: none; font-weight: bold; font-size: 1.1rem;">@dimendesoficial</a>
-    </div>
+                <!-- Redes Sociais / Instagram -->
+                <div class="redes-sociais" style="text-align: center; margin-top: 20px;">
+                    <a class="link-Instagram" href="https://www.instagram.com/dimendesoficial/" target="_blank" style="color: #2e8b57; text-decoration: none; font-weight: bold; font-size: 1.1rem;">@dimendesoficial</a>
+                </div>
             </div>
         </header>
 
@@ -357,18 +359,19 @@
 
     <!-- LÓGICA DA TABELA (Aula 11) -->
     <script src="js/script.js" defer></script>
-<!-- Secção Faça seu pedido aqui / Rodapé -->
-    <footer class="faca-pedido">
+
+    <!-- Secção Faça seu pedido aqui -->
+    <section class="faca-pedido">
         <div class="container-pedido">
             <h2>Faça seu pedido aqui</h2>
             <p>Selecione o produto, o tamanho desejado e confirme os seus dados para realizar o pedido.</p>
-            
+
             <form class="form-pedido" onsubmit="event.preventDefault(); alert('Pedido enviado com sucesso!');">
                 <div class="campo">
                     <label for="cliente-nome">Nome Completo:</label>
                     <input type="text" id="cliente-nome" placeholder="Digite o seu nome" required>
                 </div>
-                
+
                 <div class="campo">
                     <label for="cliente-email">E-mail para Contacto:</label>
                     <input type="email" id="cliente-email" placeholder="seuemail@exemplo.com" required>
@@ -396,7 +399,7 @@
                         <option value="GG">GG (Extra Grande)</option>
                     </select>
                 </div>
-                
+
                 <div class="campo">
                     <label for="observacoes">Outras Observações (Opcional):</label>
                     <textarea id="observacoes" rows="2" placeholder="Ex: Cor preferida, detalhes..."></textarea>
@@ -409,10 +412,12 @@
             <div class="redes-sociais" style="text-align: center; margin-top: 25px;">
                 <a class="link-Instagram" href="https://www.instagram.com/dimendesoficial/" target="_blank" style="color: #1e5631; text-decoration: none; font-weight: bold; font-size: 1.1rem;">@dimendesoficial</a>
             </div>
-                <footer class="site-footer">
-        <p>&copy; 2026 Dimendes - Criado por Felipe</p>
-    </footer>
         </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="site-footer">
+        <p>&copy; 2026 Dimendes - Criado por Felipe</p>
     </footer>
 
 </body>
